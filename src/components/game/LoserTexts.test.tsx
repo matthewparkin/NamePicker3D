@@ -4,21 +4,31 @@ import { LoserTexts } from './LoserTexts';
 describe('LoserTexts', () => {
   it('renders without crashing with losers', () => {
     const losers = ['Bob', 'Charlie'];
-    render(<LoserTexts losers={losers} />);
+    const { container } = render(<LoserTexts losers={losers} />);
 
-    expect(true).toBe(true);
+    expect(container).toBeInTheDocument();
   });
 
   it('renders without crashing with many losers', () => {
-    const losers = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-    render(<LoserTexts losers={losers} />);
+    const losers = [
+      'Alice',
+      'Bob',
+      'Charlie',
+      'Davey',
+      'Master Skywalker',
+      'Theres',
+      'too',
+      'many',
+      'of them',
+    ];
+    const { container } = render(<LoserTexts losers={losers} />);
 
-    expect(true).toBe(true);
+    expect(container).toBeInTheDocument();
   });
 
   it('renders without crashing with empty losers', () => {
-    render(<LoserTexts losers={[]} />);
+    const { container } = render(<LoserTexts losers={[]} />);
 
-    expect(true).toBe(true);
+    expect(container).toBeInTheDocument();
   });
 });

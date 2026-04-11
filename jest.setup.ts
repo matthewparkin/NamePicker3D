@@ -24,6 +24,10 @@ jest.mock('@react-three/drei', () => ({
   Text3D: ({ children }: { children: React.ReactNode }) =>
     React.createElement('div', null, children),
   Stars: () => React.createElement('div', null),
+  Sparkles: () => React.createElement('div', null),
+  Plane: ({ children }: { children: React.ReactNode }) =>
+    React.createElement('div', null, children),
+  OrbitControls: () => React.createElement('div', null),
 }));
 
 // Mock React Three Fiber with extend
@@ -33,8 +37,7 @@ jest.mock('@react-three/fiber', () => {
     React.createElement('div', props, children);
 
   return {
-    Canvas: ({ children }: { children: React.ReactNode }) =>
-      React.createElement('div', null, children),
+    Canvas: () => React.createElement('div', { 'data-testid': 'canvas' }),
     useFrame: jest.fn(),
     useThree: jest.fn(() => ({})),
     extend: jest.fn(),
@@ -46,8 +49,26 @@ jest.mock('@react-three/fiber', () => {
     planeGeometry: mockComponent,
     ambientLight: mockComponent,
     directionalLight: mockComponent,
+    pointLight: mockComponent,
     meshBasicMaterial: mockComponent,
     boxGeometry: mockComponent,
     sphereGeometry: mockComponent,
   };
 });
+
+// Mock game components that are Three.js-only
+jest.mock('./src/components/game/LoserTexts', () => ({
+  LoserTexts: () => React.createElement('div', { 'data-testid': 'loser-texts' }),
+}));
+
+jest.mock('./src/components/game/WinnerText', () => ({
+  WinnerText: () => React.createElement('div', { 'data-testid': 'winner-text' }),
+}));
+
+jest.mock('./src/components/game/DecorativeElements', () => ({
+  DecorativeElements: () => React.createElement('div', { 'data-testid': 'decorative-elements' }),
+}));
+
+jest.mock('./src/components/game/Scene', () => ({
+  Scene: () => React.createElement('div', { 'data-testid': 'scene' }),
+}));

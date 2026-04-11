@@ -3,9 +3,9 @@ import { Scene } from './Scene';
 
 describe('Scene', () => {
   it('renders without crashing', () => {
-    render(<Scene />);
+    const { container } = render(<Scene />);
 
-    // Since it's 3D components, just check it doesn't throw
-    expect(true).toBe(true);
+    // Since it's 3D components, just check it renders
+    expect(container).toBeInTheDocument();
   });
 });
