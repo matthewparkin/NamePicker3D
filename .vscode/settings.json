@@ -1,0 +1,48 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "jest.autoRun": "off",
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorCustomizations": {
+    // "editor.background": "#02050c",
+    // "editor.foreground": "#f8fafc",
+    // "editor.lineHighlightBackground": "#0a0f1e",
+    // "editor.selectionBackground": "#6887ff40",
+    "editorCursor.foreground": "#934be1",
+    "editorLineNumber.foreground": "#b8c6d5",
+    "editorLineNumber.activeForeground": "#88fafc"
+    // "editorWidget.background": "#091e1e",
+    // "editorWidget.border": "#ffffff14",
+    // "editorSuggestWidget.background": "#091e1e",
+    // "editorSuggestWidget.border": "#ffffff14",
+    // "editorSuggestWidget.selectedBackground": "#6887ff20",
+    // "sideBar.background": "#02050c",
+    // "sideBar.foreground": "#f8fafc",
+    // "sideBar.border": "#ffffff08",
+    // "activityBar.background": "#02050c",
+    // "activityBar.foreground": "#f8fafc",
+    // "statusBar.background": "#02050c",
+    // "statusBar.foreground": "#f8fafc",
+    // "statusBar.border": "#3353ff14",
+    // "titleBar.activeBackground": "#02050c",
+    // "titleBar.activeForeground": "#f8fafc",
+    // "titleBar.border": "#ffffff08",
+    // "tab.activeBackground": "#091e1e",
+    // "tab.activeForeground": "#f8fafc",
+    // "tab.inactiveBackground": "#02050c",
+    // "tab.inactiveForeground": "#b8c6d5",
+    // "terminal.background": "#02050c",
+    // "terminal.foreground": "#f8fafc",
+    // "terminalCursor.foreground": "#934be1"
+  }
+}
