@@ -3,9 +3,9 @@ import { DecorativeElements } from './DecorativeElements';
 
 describe('DecorativeElements', () => {
   it('renders without crashing', () => {
-    render(<DecorativeElements />);
+    const { container } = render(<DecorativeElements />);
 
-    // Since it's 3D components, just check it doesn't throw
-    expect(true).toBe(true);
+    // Since it's 3D components, just check it renders
+    expect(container).toBeInTheDocument();
   });
 });
