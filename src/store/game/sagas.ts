@@ -22,12 +22,21 @@ export const initGameSaga = function* () {
   const winner = parseWinner(params.winner as string | string[] | null | undefined);
   const losers = parseJsonArray(params.losers as string | string[] | null | undefined);
   const allNames = parseJsonArray(params.names as string | string[] | null | undefined);
+  const currentThemeId =
+    parseWinner(params.theme as string | string[] | null | undefined) || 'spacia';
+  const currentAnimationPackageId =
+    parseWinner(params.animation as string | string[] | null | undefined) || 'text-3d';
+  const currentRevealStrategy =
+    parseWinner(params.strategy as string | string[] | null | undefined) || 'default';
 
   const initialState: GameState = {
     winner,
     losers,
     allNames,
     isScrollThrottled: false,
+    currentThemeId,
+    currentRevealStrategy,
+    currentAnimationPackageId,
   };
 
   yield put(setGameState(initialState));
@@ -39,6 +48,9 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
     return;
   }
 
+  const game: GameState = yield select((state: RootState) => state.game);
+  const { currentThemeId, currentRevealStrategy, currentAnimationPackageId } = game;
+
   const randomIndex = Math.floor(Math.random() * names.length);
   const winner = names[randomIndex];
   const losers = names.filter((_, index) => index !== randomIndex);
@@ -48,6 +60,9 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
     losers,
     allNames: names,
     isScrollThrottled: false,
+    currentThemeId,
+    currentRevealStrategy,
+    currentAnimationPackageId,
   };
 
   yield put(setGameState(nextState));
@@ -56,7 +71,8 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
 
 export const pickAgainSaga = function* () {
   const game: GameState = yield select((state: RootState) => state.game);
-  const { losers, allNames } = game;
+  const { losers, allNames, currentThemeId, currentRevealStrategy, currentAnimationPackageId } =
+    game;
   if (losers.length === 0) {
     return;
   }
@@ -70,6 +86,9 @@ export const pickAgainSaga = function* () {
     losers: nextLosers,
     allNames,
     isScrollThrottled: false,
+    currentThemeId,
+    currentRevealStrategy,
+    currentAnimationPackageId,
   };
 
   yield put(setGameState(nextState));

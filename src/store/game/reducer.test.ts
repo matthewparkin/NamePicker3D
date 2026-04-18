@@ -8,6 +8,9 @@ describe('game reducer', () => {
     losers: [],
     allNames: [],
     isScrollThrottled: false,
+    currentThemeId: 'spacia',
+    currentRevealStrategy: 'default',
+    currentAnimationPackageId: 'text-3d',
   };
 
   it('sets the game state when asked', () => {
@@ -16,6 +19,9 @@ describe('game reducer', () => {
       losers: ['Bob', 'Charlie'],
       allNames: ['Alice', 'Bob', 'Charlie'],
       isScrollThrottled: false,
+      currentThemeId: 'spacia',
+      currentRevealStrategy: 'default',
+      currentAnimationPackageId: 'text-3d',
     };
 
     expect(gameReducer(initialState, setGameState(nextState))).toEqual(nextState);
@@ -27,6 +33,9 @@ describe('game reducer', () => {
       losers: ['Bob', 'Charlie'],
       allNames: ['Alice', 'Bob', 'Charlie'],
       isScrollThrottled: false,
+      currentThemeId: 'spacia',
+      currentRevealStrategy: 'default',
+      currentAnimationPackageId: 'text-3d',
     };
 
     expect(gameReducer(state, resetWinner())).toEqual({
@@ -34,6 +43,9 @@ describe('game reducer', () => {
       losers: [],
       allNames: ['Alice', 'Bob', 'Charlie'],
       isScrollThrottled: false,
+      currentThemeId: 'spacia',
+      currentRevealStrategy: 'default',
+      currentAnimationPackageId: 'text-3d',
     });
   });
 });

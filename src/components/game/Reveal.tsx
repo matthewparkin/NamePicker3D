@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { WinnerText } from './WinnerText';
 import { LoserTexts } from './LoserTexts';
-import { Scene } from './Scene';
+import { ThemeScene } from './ThemeScene';
 import { DecorativeElements } from './DecorativeElements';
 import { scrollEvent } from '../../store/game/actions';
-import type { RootState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getTheme } from '../../themes';
+import { getAnimationPackage } from '../../animations';
 
 interface RevealProps {
   winner: string;
@@ -17,9 +18,20 @@ interface RevealProps {
 }
 
 const Reveal = ({ winner, losers, onBack, onPickAgain }: RevealProps) => {
-  const dispatch = useDispatch();
-  const isScrollThrottled = useSelector((state: RootState) => state.game.isScrollThrottled);
+  const dispatch = useAppDispatch();
+  const { isScrollThrottled, currentThemeId, currentRevealStrategy, currentAnimationPackageId } =
+    useAppSelector((state) => state.game);
   const revealRef = useRef<HTMLDivElement>(null);
+
+  const theme = getTheme(currentThemeId);
+  const animationPackage = getAnimationPackage(currentAnimationPackageId);
+  const revealStrategy =
+    theme.revealStrategies[currentRevealStrategy] || theme.revealStrategies.default;
+
+  // Use custom animation components if available, otherwise fall back to default
+  const WinnerComponent = animationPackage.WinnerComponent || WinnerText;
+  const LoserComponent = animationPackage.LoserComponent || LoserTexts;
+  const SceneEffects = animationPackage.SceneEffects;
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -43,9 +55,10 @@ const Reveal = ({ winner, losers, onBack, onPickAgain }: RevealProps) => {
   return (
     <div className="reveal" ref={revealRef}>
       <Canvas camera={{ position: [0, 0, 8], fov: 40 }}>
-        <Scene />
-        <LoserTexts losers={losers} />
-        <WinnerText winner={winner} />
+        <ThemeScene theme={theme} />
+        {SceneEffects && <SceneEffects />}
+        <LoserComponent losers={losers} strategy={revealStrategy} />
+        <WinnerComponent winner={winner} strategy={revealStrategy} />
         <DecorativeElements />
         <OrbitControls enableZoom enablePan enableRotate />
       </Canvas>

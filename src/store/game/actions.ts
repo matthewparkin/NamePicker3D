@@ -7,6 +7,9 @@ export const PICK_AGAIN_REQUEST = 'game/PICK_AGAIN_REQUEST' as const;
 export const RESET_WINNER = 'game/RESET_WINNER' as const;
 export const SCROLL_EVENT = 'game/SCROLL_EVENT' as const;
 export const SET_SCROLL_THROTTLE = 'game/SET_SCROLL_THROTTLE' as const;
+export const SET_THEME = 'game/SET_THEME' as const;
+export const SET_REVEAL_STRATEGY = 'game/SET_REVEAL_STRATEGY' as const;
+export const SET_ANIMATION_PACKAGE = 'game/SET_ANIMATION_PACKAGE' as const;
 
 export const initGame = () => ({ type: INIT_GAME });
 export const setGameState = (payload: GameState) => ({
@@ -27,6 +30,18 @@ export const setScrollThrottle = (isThrottled: boolean) => ({
   type: SET_SCROLL_THROTTLE,
   payload: { isThrottled },
 });
+export const setTheme = (themeId: string) => ({
+  type: SET_THEME,
+  payload: { themeId },
+});
+export const setRevealStrategy = (strategy: string) => ({
+  type: SET_REVEAL_STRATEGY,
+  payload: { strategy },
+});
+export const setAnimationPackage = (animationPackageId: string) => ({
+  type: SET_ANIMATION_PACKAGE,
+  payload: { animationPackageId },
+});
 
 export type GameAction =
   | ReturnType<typeof initGame>
@@ -35,4 +50,7 @@ export type GameAction =
   | ReturnType<typeof pickAgainRequest>
   | ReturnType<typeof resetWinner>
   | ReturnType<typeof scrollEvent>
-  | ReturnType<typeof setScrollThrottle>;
+  | ReturnType<typeof setScrollThrottle>
+  | ReturnType<typeof setTheme>
+  | ReturnType<typeof setRevealStrategy>
+  | ReturnType<typeof setAnimationPackage>;
