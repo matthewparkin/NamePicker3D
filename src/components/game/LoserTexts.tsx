@@ -1,26 +1,28 @@
 import { useMemo } from 'react';
 import { Float, Text3D } from '@react-three/drei';
+import type { RevealStrategyConfig } from '../../types/theme';
 
 interface LoserTextsProps {
   losers: string[];
+  strategy: RevealStrategyConfig;
 }
 
-export const LoserTexts = ({ losers }: LoserTextsProps) => {
+export const LoserTexts = ({ losers, strategy }: LoserTextsProps) => {
+  const { losers: losersConfig, losersAnimation } = strategy;
+
   const loserTextFields = useMemo(
     () =>
       losers.slice(0, 6).map((name, index) => {
-        const x = (index % 3) * 2.2 - 2.2;
-        const y = Math.floor(index / 3) * 1.2 - 0.5;
-        const z = -2 - index * 0.5;
-        const rotation = [0.1 * index, 0.4 + index * 0.15, -0.05 * index] as [
-          number,
-          number,
-          number,
-        ];
+        const { position, rotation } = losersConfig.layout(index, losers.slice(0, 6).length);
 
         return (
-          <Float key={`${name}-${index}`} speed={0.8} rotationIntensity={0.4} floatIntensity={0.3}>
-            <group position={[x, y, z]} rotation={rotation}>
+          <Float
+            key={`${name}-${index}`}
+            speed={losersAnimation.floatSpeed}
+            rotationIntensity={losersAnimation.rotationIntensity}
+            floatIntensity={losersAnimation.floatIntensity}
+          >
+            <group position={position} rotation={rotation}>
               <Text3D
                 font="/fonts/helvetiker_regular.typeface.json"
                 size={0.35}
@@ -34,18 +36,18 @@ export const LoserTexts = ({ losers }: LoserTextsProps) => {
               >
                 {name}
                 <meshStandardMaterial
-                  color="#ff4c4c"
-                  emissive="#8b0000"
-                  emissiveIntensity={0.35}
-                  metalness={0.2}
-                  roughness={0.4}
+                  color={losersConfig.color}
+                  emissive={losersConfig.emissive}
+                  emissiveIntensity={losersConfig.emissiveIntensity}
+                  metalness={losersConfig.metalness}
+                  roughness={losersConfig.roughness}
                 />
               </Text3D>
             </group>
           </Float>
         );
       }),
-    [losers]
+    [losers, losersConfig, losersAnimation]
   );
 
   return <>{loserTextFields}</>;

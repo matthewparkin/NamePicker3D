@@ -47,7 +47,17 @@ export const parseJsonArray = (param: QueryValue): string[] => valueToArray(para
 
 export const parseWinner = (value: QueryValue): string | null => valueToString(value);
 
-export const updateUrl = (newWinner: string | null, newLosers: string[], names: string[]) => {
+export const parseTheme = (value: QueryValue): string | null => valueToString(value);
+
+export const parseScene = (value: QueryValue): string | null => valueToString(value);
+
+export const updateUrl = (
+  newWinner: string | null,
+  newLosers: string[],
+  names: string[],
+  themeId?: string,
+  sceneId?: string
+) => {
   const cleanLosers = newLosers
     .map(cleanStringItem)
     .filter((item): item is string => Boolean(item));
@@ -58,6 +68,8 @@ export const updateUrl = (newWinner: string | null, newLosers: string[], names: 
     winner: cleanWinner ?? undefined,
     losers: cleanLosers.length > 0 ? cleanLosers : undefined,
     names: cleanNames.length > 0 ? cleanNames : undefined,
+    theme: themeId ?? undefined,
+    scene: sceneId ?? undefined,
   };
 
   const query = stringify(params, {

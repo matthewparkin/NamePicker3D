@@ -3,6 +3,10 @@ export interface GameState {
   losers: string[];
   allNames: string[];
   isScrollThrottled: boolean;
+  currentThemeId: string;
+  currentRevealStrategy: string;
+  currentSceneId: string;
+  currentAnimationPackageId: string;
 }
 
 export interface PickNamePayload {

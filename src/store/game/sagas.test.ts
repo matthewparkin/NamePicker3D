@@ -24,6 +24,10 @@ describe('game sagas', () => {
           losers: ['Bob', 'Charlie'],
           allNames: ['Alice', 'Bob', 'Charlie'],
           isScrollThrottled: false,
+          currentThemeId: 'spacia',
+          currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
+          currentAnimationPackageId: 'text-3d',
         })
       )
     );
@@ -35,13 +39,31 @@ describe('game sagas', () => {
     const names = ['Alice', 'Bob', 'Charlie'];
     const generator = pickNameSaga(pickNameRequest(names));
 
-    expect(generator.next().value).toEqual(
+    const selectEffect = generator.next().value;
+    expect(selectEffect).toHaveProperty('payload.selector');
+
+    expect(
+      generator.next({
+        winner: null,
+        losers: [],
+        allNames: [],
+        isScrollThrottled: false,
+        currentThemeId: 'spacia',
+        currentRevealStrategy: 'default',
+        currentSceneId: 'generic',
+        currentAnimationPackageId: 'text-3d',
+      }).value
+    ).toEqual(
       put(
         setGameState({
           winner: 'Bob',
           losers: ['Alice', 'Charlie'],
           allNames: names,
           isScrollThrottled: false,
+          currentThemeId: 'spacia',
+          currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
+          currentAnimationPackageId: 'text-3d',
         })
       )
     );
@@ -61,6 +83,10 @@ describe('game sagas', () => {
       losers: ['Bob', 'Charlie', 'Dana'],
       allNames: ['Alice', 'Bob', 'Charlie', 'Dana'],
       isScrollThrottled: false,
+      currentThemeId: 'spacia',
+      currentRevealStrategy: 'default',
+      currentSceneId: 'generic',
+      currentAnimationPackageId: 'text-3d',
     };
     const generator = pickAgainSaga();
 
@@ -74,6 +100,10 @@ describe('game sagas', () => {
           losers: ['Bob', 'Dana'],
           allNames: ['Alice', 'Bob', 'Charlie', 'Dana'],
           isScrollThrottled: false,
+          currentThemeId: 'spacia',
+          currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
+          currentAnimationPackageId: 'text-3d',
         })
       )
     );
@@ -88,7 +118,16 @@ describe('game sagas', () => {
     const selectEffect = generator.next().value;
     expect(selectEffect).toHaveProperty('payload.selector');
     expect(
-      generator.next({ winner: 'Alice', losers: [], allNames: [], isScrollThrottled: false }).done
+      generator.next({
+        winner: 'Alice',
+        losers: [],
+        allNames: [],
+        isScrollThrottled: false,
+        currentThemeId: 'spacia',
+        currentRevealStrategy: 'default',
+        currentSceneId: 'generic',
+        currentAnimationPackageId: 'text-3d',
+      }).done
     ).toBe(true);
   });
 
@@ -98,6 +137,10 @@ describe('game sagas', () => {
       losers: ['Bob', 'Charlie'],
       allNames: ['Alice', 'Bob', 'Charlie'],
       isScrollThrottled: false,
+      currentThemeId: 'spacia',
+      currentRevealStrategy: 'default',
+      currentSceneId: 'generic',
+      currentAnimationPackageId: 'text-3d',
     };
     const generator = resetWinnerSaga();
 
@@ -111,6 +154,10 @@ describe('game sagas', () => {
           losers: [],
           allNames: ['Alice', 'Bob', 'Charlie'],
           isScrollThrottled: false,
+          currentThemeId: 'spacia',
+          currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
+          currentAnimationPackageId: 'text-3d',
         })
       )
     );
