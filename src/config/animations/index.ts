@@ -1,6 +1,6 @@
-import { WinnerText } from '../components/game/WinnerText';
-import { LoserTexts } from '../components/game/LoserTexts';
-import type { AnimationPackage } from '../types/animation';
+import { WinnerText } from '../../components/game/WinnerText';
+import { LoserTexts } from '../../components/game/LoserTexts';
+import type { AnimationPackage } from '../../types/animation';
 
 /**
  * Default Text Animation Package

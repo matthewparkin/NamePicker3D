@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { getTheme } from '../../themes';
+import { getTheme } from '../../config/themes';
 import type { RevealStrategyConfig } from '../../types/theme';
 import { WinnerText } from './WinnerText';
 
@@ -35,6 +35,7 @@ describe('WinnerText Component - Theme Integration', () => {
         expect(container).toBeTruthy();
       });
 
+      // Go back and review these tests - Got ai to do this but this isnt providing much value - just testing that the strategy config has the expected properties, not that they are actually applied in the component
       it('should use strategy winner color', () => {
         const winnerConfig = strategy.winner;
         expect(winnerConfig.color).toBeDefined();

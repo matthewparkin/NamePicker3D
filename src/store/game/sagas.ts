@@ -28,6 +28,8 @@ export const initGameSaga = function* () {
     parseWinner(params.animation as string | string[] | null | undefined) || 'text-3d';
   const currentRevealStrategy =
     parseWinner(params.strategy as string | string[] | null | undefined) || 'default';
+  const currentSceneId =
+    parseWinner(params.scene as string | string[] | null | undefined) || 'generic';
 
   const initialState: GameState = {
     winner,
@@ -36,6 +38,7 @@ export const initGameSaga = function* () {
     isScrollThrottled: false,
     currentThemeId,
     currentRevealStrategy,
+    currentSceneId,
     currentAnimationPackageId,
   };
 
@@ -49,7 +52,7 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
   }
 
   const game: GameState = yield select((state: RootState) => state.game);
-  const { currentThemeId, currentRevealStrategy, currentAnimationPackageId } = game;
+  const { currentThemeId, currentRevealStrategy, currentAnimationPackageId, currentSceneId } = game;
 
   const randomIndex = Math.floor(Math.random() * names.length);
   const winner = names[randomIndex];
@@ -62,6 +65,7 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
     isScrollThrottled: false,
     currentThemeId,
     currentRevealStrategy,
+    currentSceneId,
     currentAnimationPackageId,
   };
 
@@ -71,8 +75,14 @@ export const pickNameSaga = function* (action: ReturnType<typeof pickNameRequest
 
 export const pickAgainSaga = function* () {
   const game: GameState = yield select((state: RootState) => state.game);
-  const { losers, allNames, currentThemeId, currentRevealStrategy, currentAnimationPackageId } =
-    game;
+  const {
+    losers,
+    allNames,
+    currentThemeId,
+    currentRevealStrategy,
+    currentAnimationPackageId,
+    currentSceneId,
+  } = game;
   if (losers.length === 0) {
     return;
   }
@@ -88,6 +98,7 @@ export const pickAgainSaga = function* () {
     isScrollThrottled: false,
     currentThemeId,
     currentRevealStrategy,
+    currentSceneId,
     currentAnimationPackageId,
   };
 

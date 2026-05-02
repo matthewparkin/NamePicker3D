@@ -26,6 +26,7 @@ describe('game sagas', () => {
           isScrollThrottled: false,
           currentThemeId: 'spacia',
           currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
           currentAnimationPackageId: 'text-3d',
         })
       )
@@ -49,6 +50,7 @@ describe('game sagas', () => {
         isScrollThrottled: false,
         currentThemeId: 'spacia',
         currentRevealStrategy: 'default',
+        currentSceneId: 'generic',
         currentAnimationPackageId: 'text-3d',
       }).value
     ).toEqual(
@@ -60,6 +62,7 @@ describe('game sagas', () => {
           isScrollThrottled: false,
           currentThemeId: 'spacia',
           currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
           currentAnimationPackageId: 'text-3d',
         })
       )
@@ -82,6 +85,7 @@ describe('game sagas', () => {
       isScrollThrottled: false,
       currentThemeId: 'spacia',
       currentRevealStrategy: 'default',
+      currentSceneId: 'generic',
       currentAnimationPackageId: 'text-3d',
     };
     const generator = pickAgainSaga();
@@ -98,6 +102,7 @@ describe('game sagas', () => {
           isScrollThrottled: false,
           currentThemeId: 'spacia',
           currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
           currentAnimationPackageId: 'text-3d',
         })
       )
@@ -120,6 +125,7 @@ describe('game sagas', () => {
         isScrollThrottled: false,
         currentThemeId: 'spacia',
         currentRevealStrategy: 'default',
+        currentSceneId: 'generic',
         currentAnimationPackageId: 'text-3d',
       }).done
     ).toBe(true);
@@ -133,6 +139,7 @@ describe('game sagas', () => {
       isScrollThrottled: false,
       currentThemeId: 'spacia',
       currentRevealStrategy: 'default',
+      currentSceneId: 'generic',
       currentAnimationPackageId: 'text-3d',
     };
     const generator = resetWinnerSaga();
@@ -149,6 +156,7 @@ describe('game sagas', () => {
           isScrollThrottled: false,
           currentThemeId: 'spacia',
           currentRevealStrategy: 'default',
+          currentSceneId: 'generic',
           currentAnimationPackageId: 'text-3d',
         })
       )

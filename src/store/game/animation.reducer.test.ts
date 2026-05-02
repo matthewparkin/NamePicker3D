@@ -2,6 +2,8 @@ import { setAnimationPackage } from './actions';
 import gameReducer from './reducer';
 import type { GameState } from './types';
 
+// This test suite focuses on the animation package aspect of the game state, ensuring that changes to the animation package are handled correctly without affecting other parts of the state.
+// It verifies that the correct animation package ID is set and that other properties remain unchanged when the animation package is updated.
 describe('Game Animation Package Reducer', () => {
   const initialState: GameState = {
     winner: null,
@@ -10,6 +12,7 @@ describe('Game Animation Package Reducer', () => {
     isScrollThrottled: false,
     currentThemeId: 'spacia',
     currentRevealStrategy: 'default',
+    currentSceneId: 'generic',
     currentAnimationPackageId: 'text-3d',
   };
 

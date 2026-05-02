@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { getTheme } from '../../themes';
+import { getTheme } from '../../config/themes';
 import { LoserTexts } from './LoserTexts';
 
 describe('LoserTexts', () => {

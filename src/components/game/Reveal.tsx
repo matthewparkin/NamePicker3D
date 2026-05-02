@@ -1,14 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { WinnerText } from './WinnerText';
-import { LoserTexts } from './LoserTexts';
-import { ThemeScene } from './ThemeScene';
-import { DecorativeElements } from './DecorativeElements';
+import { SceneManager } from './SceneManager';
 import { scrollEvent } from '../../store/game/actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getTheme } from '../../themes';
-import { getAnimationPackage } from '../../animations';
+import { getTheme } from '../../config/themes';
+import { getScene } from '../../config/scenes';
 
 interface RevealProps {
   winner: string;
@@ -19,19 +14,14 @@ interface RevealProps {
 
 const Reveal = ({ winner, losers, onBack, onPickAgain }: RevealProps) => {
   const dispatch = useAppDispatch();
-  const { isScrollThrottled, currentThemeId, currentRevealStrategy, currentAnimationPackageId } =
+  const { isScrollThrottled, currentThemeId, currentRevealStrategy, currentSceneId } =
     useAppSelector((state) => state.game);
   const revealRef = useRef<HTMLDivElement>(null);
 
   const theme = getTheme(currentThemeId);
-  const animationPackage = getAnimationPackage(currentAnimationPackageId);
+  const scene = getScene(currentSceneId);
   const revealStrategy =
     theme.revealStrategies[currentRevealStrategy] || theme.revealStrategies.default;
-
-  // Use custom animation components if available, otherwise fall back to default
-  const WinnerComponent = animationPackage.WinnerComponent || WinnerText;
-  const LoserComponent = animationPackage.LoserComponent || LoserTexts;
-  const SceneEffects = animationPackage.SceneEffects;
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -54,14 +44,13 @@ const Reveal = ({ winner, losers, onBack, onPickAgain }: RevealProps) => {
 
   return (
     <div className="reveal" ref={revealRef}>
-      <Canvas camera={{ position: [0, 0, 8], fov: 40 }}>
-        <ThemeScene theme={theme} />
-        {SceneEffects && <SceneEffects />}
-        <LoserComponent losers={losers} strategy={revealStrategy} />
-        <WinnerComponent winner={winner} strategy={revealStrategy} />
-        <DecorativeElements />
-        <OrbitControls enableZoom enablePan enableRotate />
-      </Canvas>
+      <SceneManager
+        theme={theme}
+        scene={scene}
+        winner={winner}
+        losers={losers}
+        revealStrategy={revealStrategy}
+      />
 
       <div className="reveal-actions">
         <button className="back-button" onClick={onBack}>

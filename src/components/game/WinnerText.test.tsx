@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { WinnerText } from './WinnerText';
-import { getTheme } from '../../themes';
+import { getTheme } from '../../config/themes';
 
 describe('WinnerText', () => {
   const theme = getTheme('spacia');

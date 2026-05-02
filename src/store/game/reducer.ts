@@ -5,6 +5,7 @@ import {
   SET_SCROLL_THROTTLE,
   SET_THEME,
   SET_REVEAL_STRATEGY,
+  SET_SCENE,
   SET_ANIMATION_PACKAGE,
 } from './actions';
 import type { GameAction } from './actions';
@@ -16,6 +17,7 @@ const initialState: GameState = {
   isScrollThrottled: false,
   currentThemeId: 'spacia',
   currentRevealStrategy: 'default',
+  currentSceneId: 'generic',
   currentAnimationPackageId: 'text-3d',
 };
 
@@ -43,6 +45,11 @@ const gameReducer = (state = initialState, action: GameAction): GameState => {
       return {
         ...state,
         currentRevealStrategy: action.payload.strategy,
+      };
+    case SET_SCENE:
+      return {
+        ...state,
+        currentSceneId: action.payload.sceneId,
       };
     case SET_ANIMATION_PACKAGE:
       return {

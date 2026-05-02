@@ -10,6 +10,7 @@ describe('Game Theme Reducer', () => {
     isScrollThrottled: false,
     currentThemeId: 'spacia',
     currentRevealStrategy: 'default',
+    currentSceneId: 'generic',
     currentAnimationPackageId: 'text-3d',
   };
 

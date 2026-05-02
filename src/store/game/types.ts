@@ -5,6 +5,7 @@ export interface GameState {
   isScrollThrottled: boolean;
   currentThemeId: string;
   currentRevealStrategy: string;
+  currentSceneId: string;
   currentAnimationPackageId: string;
 }
 

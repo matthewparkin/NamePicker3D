@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setTheme, setAnimationPackage } from '../store/game/actions';
-import { allThemes } from '../themes';
-import { allAnimationPackages } from '../animations';
+import { setTheme, setScene } from '../store/game/actions';
+import { allThemes } from '../config/themes';
+import { allScenes } from '../config/scenes';
 
 interface FormData {
   names: string;
@@ -17,14 +17,13 @@ interface FormProps {
 const Form = ({ initialNames, onPick }: FormProps) => {
   const dispatch = useAppDispatch();
   const currentThemeId = useAppSelector((state) => state.game.currentThemeId);
-  const currentAnimationPackageId = useAppSelector((state) => state.game.currentAnimationPackageId);
+  const currentSceneId = useAppSelector((state) => state.game.currentSceneId);
   const { register, handleSubmit, setValue } = useForm<FormData>({
     defaultValues: { names: initialNames.join('\n') },
   });
 
   const currentTheme = allThemes.find((t) => t.id === currentThemeId) || allThemes[0];
-  const currentAnimationPackage =
-    allAnimationPackages.find((p) => p.id === currentAnimationPackageId) || allAnimationPackages[0];
+  const currentScene = allScenes.find((s) => s.id === currentSceneId) || allScenes[0];
 
   useEffect(() => {
     if (initialNames.length > 0) {
@@ -42,21 +41,46 @@ const Form = ({ initialNames, onPick }: FormProps) => {
     onPick(names);
   };
 
-  const formTheme = currentTheme.formTheme;
+  const themeStyle = currentTheme.style;
 
   return (
     <div
       className="form"
       style={{
-        background: formTheme.backgroundColor,
+        background: themeStyle.backgroundColor,
       }}
     >
-      <div className="form-content" style={{ borderColor: formTheme.borderColor }}>
-        <h1 style={{ color: formTheme.textColor }}>Name Reveal</h1>
+      <div className="form-content" style={{ borderColor: themeStyle.borderColor }}>
+        <h1 style={{ color: themeStyle.textColor }}>Name Reveal</h1>
         <p className="form-subtitle">Enter one name per line and reveal a winner in 3D.</p>
 
+        <div className="scene-selector">
+          <label htmlFor="scene-select" style={{ color: themeStyle.textColor }}>
+            Scene:
+          </label>
+          <select
+            id="scene-select"
+            value={currentSceneId}
+            onChange={(e) => dispatch(setScene(e.target.value))}
+            style={{
+              backgroundColor: themeStyle.buttonColor,
+              color: themeStyle.textColor,
+              borderColor: themeStyle.accentColor,
+            }}
+          >
+            {allScenes.map((scene) => (
+              <option key={scene.id} value={scene.id}>
+                {scene.name}
+              </option>
+            ))}
+          </select>
+          <p className="selector-description" style={{ color: themeStyle.textColor, opacity: 0.7 }}>
+            {currentScene.name}: Game mechanics and animation style.
+          </p>
+        </div>
+
         <div className="theme-selector">
-          <label htmlFor="theme-select" style={{ color: formTheme.textColor }}>
+          <label htmlFor="theme-select" style={{ color: themeStyle.textColor }}>
             Theme:
           </label>
           <select
@@ -64,9 +88,9 @@ const Form = ({ initialNames, onPick }: FormProps) => {
             value={currentThemeId}
             onChange={(e) => dispatch(setTheme(e.target.value))}
             style={{
-              backgroundColor: formTheme.buttonBackground,
-              color: formTheme.textColor,
-              borderColor: formTheme.accentColor,
+              backgroundColor: themeStyle.buttonColor,
+              color: themeStyle.textColor,
+              borderColor: themeStyle.accentColor,
             }}
           >
             {allThemes.map((theme) => (
@@ -75,33 +99,8 @@ const Form = ({ initialNames, onPick }: FormProps) => {
               </option>
             ))}
           </select>
-          <p className="selector-description" style={{ color: formTheme.textColor, opacity: 0.7 }}>
-            {currentTheme.name}: Changes the 3D environment and lighting.
-          </p>
-        </div>
-
-        <div className="animation-selector">
-          <label htmlFor="animation-select" style={{ color: formTheme.textColor }}>
-            Animation:
-          </label>
-          <select
-            id="animation-select"
-            value={currentAnimationPackageId}
-            onChange={(e) => dispatch(setAnimationPackage(e.target.value))}
-            style={{
-              backgroundColor: formTheme.buttonBackground,
-              color: formTheme.textColor,
-              borderColor: formTheme.accentColor,
-            }}
-          >
-            {allAnimationPackages.map((pkg) => (
-              <option key={pkg.id} value={pkg.id}>
-                {pkg.name}
-              </option>
-            ))}
-          </select>
-          <p className="selector-description" style={{ color: formTheme.textColor, opacity: 0.7 }}>
-            {currentAnimationPackage.description}
+          <p className="selector-description" style={{ color: themeStyle.textColor, opacity: 0.7 }}>
+            {currentTheme.name}: Colors and visual style.
           </p>
         </div>
 
@@ -112,16 +111,16 @@ const Form = ({ initialNames, onPick }: FormProps) => {
             className="name-list"
             style={{
               backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              color: formTheme.textColor,
-              borderColor: formTheme.borderColor,
+              color: themeStyle.textColor,
+              borderColor: themeStyle.borderColor,
             }}
           />
           <button
             type="submit"
             className="submit-button"
             style={{
-              backgroundColor: formTheme.buttonBackground,
-              color: formTheme.textColor,
+              backgroundColor: themeStyle.buttonColor,
+              color: themeStyle.textColor,
             }}
           >
             Pick Random Name
